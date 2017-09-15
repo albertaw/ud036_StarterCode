@@ -1,2 +1,14 @@
-# ud036_StarterCode
-Source code for a Movie Trailer website.
+Movie Trailer Website
+=========================
+
+#### Start app
+
+```bash
+$ python app.py
+```
+
+#### Run tests
+
+```bash
+$ python test.py
+```

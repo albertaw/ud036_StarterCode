@@ -17,9 +17,7 @@ main_page_head = '''
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <style type="text/css" media="screen">
-        body {
-            padding-top: 80px;
-        }
+    
         #trailer .modal-dialog {
             margin-top: 200px;
             width: 640px;
@@ -40,7 +38,6 @@ main_page_head = '''
             padding-top: 20px;
         }
         .movie-tile:hover {
-            background-color: #EEE;
             cursor: pointer;
         }
         .scale-media {
@@ -55,6 +52,25 @@ main_page_head = '''
             left: 0;
             top: 0;
             background-color: white;
+        }
+        .movie-title {
+            display: inline block;
+            margin: 1em 0;
+            font-weight: 400;
+        }
+
+        .navbar-brand {
+            color: #000;
+        }
+        footer {
+            padding: 3em 0;
+            text-align: center;
+        }
+        a:link,
+        a:visited,
+        a:hover,
+        a:active{
+            color: #E04006;
         }
     </style>
     <script type="text/javascript" charset="utf-8">
@@ -77,10 +93,18 @@ main_page_head = '''
         });
         // Animate in the movies when the page loads
         $(document).ready(function () {
-          $('.movie-tile').hide().first().show("fast", function showNext() {
-            $(this).next("div").show("fast", showNext);
+           $('.movie-tile img').mouseenter(function(){
+            $(this).popover('show');
+          });
+          $('.movie-tile img').mouseleave(function(){
+            $(this).popover('destroy');
           });
         });
+
+        //Popovers for movie description
+
+         
+        
     </script>
 </head>
 '''
@@ -102,19 +126,25 @@ main_page_content = '''
       </div>
     </div>
 
+    <!-- Image and text -->
+    <nav class="navbar">
+        <div class="container">
+          <a class="navbar-brand" href="index.html">
+            <img src="tomato-32.png" width="32" height="32" class="d-inline-block align-top" alt="">
+            Fresh Tomatoes
+          </a>
+      </div>
+    </nav>
+
     <!-- Main Page Content -->
     <div class="container">
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">Fresh Tomatoes Movie Trailers</a>
-          </div>
+        <div>
+          {movie_tiles}
         </div>
-      </div>
     </div>
-    <div class="container">
-      {movie_tiles}
-    </div>
+    <footer>
+        &copy;2017 <a href="http://albertawilliams.com" target="_blank">Alberta Williams</a>
+    </footer>
   </body>
 </html>
 '''
@@ -122,9 +152,9 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
-    <h2>{movie_title}</h2>
+<div class="col-md-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+    <img src="{poster_image_url}" width="220" height="342" data-toggle="popover" data-container="body" data-placement="right" data-content="{storyline}">
+    <h4 class="movie-title">{movie_title}</h4>
 </div>
 '''
 
@@ -145,14 +175,15 @@ def create_movie_tiles_content(movies):
         content += movie_tile_content.format(
             movie_title=movie.title,
             poster_image_url=movie.poster_image_url,
-            trailer_youtube_id=trailer_youtube_id
+            trailer_youtube_id=trailer_youtube_id,
+            storyline=movie.storyline
         )
     return content
 
 
 def open_movies_page(movies):
     # Create or overwrite the output file
-    output_file = open('fresh_tomatoes.html', 'w')
+    output_file = open('index.html', 'w')
 
     # Replace the movie tiles placeholder generated content
     rendered_content = main_page_content.format(
