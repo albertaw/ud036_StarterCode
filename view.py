@@ -10,7 +10,7 @@ main_page_head = '''
 <head>
     <meta charset="utf-8">
     <title>Fresh Tomatoes!</title>
-
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Bungee+Outline|Bungee+Shade" rel="stylesheet">
     <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
@@ -58,9 +58,11 @@ main_page_head = '''
             margin: 1em 0;
             font-weight: 400;
         }
-
-        .navbar-brand {
-            color: #000;
+        h1 img {
+            margin-right: .5em;
+        }
+        h4 {
+            font-family: 'Bungee', cursive;
         }
         footer {
             padding: 3em 0;
@@ -71,6 +73,16 @@ main_page_head = '''
         a:hover,
         a:active{
             color: #E04006;
+        }
+        h1{
+            color: #fff;
+            font-family: 'Bungee Shade', cursive;
+        }
+        section {
+          padding: 10em 0;
+          margin-bottom: 2em;
+          position: relative;
+          background-color: #E04006;
         }
     </style>
     <script type="text/javascript" charset="utf-8">
@@ -127,23 +139,18 @@ main_page_content = '''
     </div>
 
     <!-- Image and text -->
-    <nav class="navbar">
-        <div class="container">
-          <a class="navbar-brand" href="index.html">
-            <img src="tomato-32.png" width="32" height="32" class="d-inline-block align-top" alt="">
-            Fresh Tomatoes
-          </a>
-      </div>
-    </nav>
-
-    <!-- Main Page Content -->
-    <div class="container">
-        <div>
-          {movie_tiles}
+    
+    <section>
+        <div class="container text-center"> 
+            <h1><img src="tomato-128.png" width="128" height="128" class="d-inline-block align-top" alt="">Fresh Tomatoes</h1>
         </div>
+    </section>
+    <!-- Main Page Content -->
+    <div>
+          {movie_tiles}
     </div>
     <footer>
-        &copy;2017 <a href="http://albertawilliams.com" target="_blank">Alberta Williams</a>
+        <p>&copy;2017 <a href="http://albertawilliams.com" target="_blank">Alberta Williams</a></p>
     </footer>
   </body>
 </html>
